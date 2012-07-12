@@ -366,7 +366,7 @@ Private Sub ExecuteAndLogSQLScript()
             lstLog.ListIndex = lstLog.NewIndex
             Print #intFreeFile, "Computer Name: " & Environ$("computername")
             
-            lstLog.AddItem "OS Version: " & strOSName & " ( " & strOSVersion & " )" & vbCrLf
+            lstLog.AddItem "OS Version: " & strOSName & " ( " & strOSVersion & " )"
             lstLog.ListIndex = lstLog.NewIndex
             Print #intFreeFile, "OS Version: " & strOSName & " ( " & strOSVersion & " )" & vbCrLf
             
@@ -411,13 +411,13 @@ Private Sub ExecuteAndLogSQLScript()
             lstLog.ListIndex = lstLog.NewIndex
             Print #intFreeFile, "Computer Name: " & Environ$("computername")
             
-            lstLog.AddItem "OS Version: " & strOSName & " ( " & strOSVersion & " )" & vbCrLf
+            lstLog.AddItem "OS Version: " & strOSName & " ( " & strOSVersion & " )"
             lstLog.ListIndex = lstLog.NewIndex
             Print #intFreeFile, "OS Version: " & strOSName & " ( " & strOSVersion & " )" & vbCrLf
             
             lstLog.AddItem "Executing a PLDA Combined Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details"
             lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Executing a PLDA Combined Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details" & vbCrLf
+            Print #intFreeFile, "Executing a PLDA Import Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details" & vbCrLf
             
             For lngExec = 1 To txtExecutionTimes.Text
                 DoEvents
@@ -454,13 +454,13 @@ Private Sub ExecuteAndLogSQLScript()
             lstLog.ListIndex = lstLog.NewIndex
             Print #intFreeFile, "Computer Name: " & Environ$("computername")
             
-            lstLog.AddItem "OS Version: " & strOSName & " ( " & strOSVersion & " )" & vbCrLf
+            lstLog.AddItem "OS Version: " & strOSName & " ( " & strOSVersion & " )"
             lstLog.ListIndex = lstLog.NewIndex
             Print #intFreeFile, "OS Version: " & strOSName & " ( " & strOSVersion & " )" & vbCrLf
             
             lstLog.AddItem "Executing a PLDA Combined Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details"
             lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Executing a PLDA Combined Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details" & vbCrLf
+            Print #intFreeFile, "Executing a PLDA Import Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details" & vbCrLf
             
             For lngExec = 1 To txtExecutionTimes.Text
                 DoEvents
