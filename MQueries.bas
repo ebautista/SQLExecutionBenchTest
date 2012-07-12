@@ -563,3 +563,49 @@ Public Sub ExecuteCleanupDAOCombined(datSadbel As DAO.Database, arrUniqueCode() 
         datSadbel.Execute "DELETE FROM [PLDA COMBINED DETAIL HANDELAARS] WHERE CODE = '" & UniqueCode & "'"
     Next UniqueCode
 End Sub
+
+
+Public Sub MockValidateLRNPLDA_ADO(conSadbel As ADODB.Connection)
+    Dim strCommand As String
+    Dim rstTemp As ADODB.Recordset
+    
+    strCommand = vbNullString
+    strCommand = strCommand & "SELECT "
+    strCommand = strCommand & "[PLDA COMBINED].CODE AS CODE, "
+    strCommand = strCommand & "[PLDA COMBINED].[TREE ID] "
+    strCommand = strCommand & "FROM "
+    strCommand = strCommand & "[PLDA COMBINED] INNER JOIN [PLDA COMBINED HEADER] "
+    strCommand = strCommand & "ON [PLDA COMBINED].CODE = [PLDA COMBINED HEADER].CODE "
+    strCommand = strCommand & "WHERE "
+    strCommand = strCommand & "[PLDA COMBINED HEADER].A3 = " & Chr(39) & "P244827589700110000003" & Chr(39) & " "
+    strCommand = strCommand & "AND ("
+    strCommand = strCommand & "[PLDA COMBINED].[TREE ID] NOT IN ('WL1', 'TE') "
+    strCommand = strCommand & "AND "
+    strCommand = strCommand & "NOT ISNUMERIC([PLDA COMBINED].[TREE ID])"
+    strCommand = strCommand & ")"
+    
+    RstOpen strCommand, conSadbel, rstTemp, adOpenKeyset, adLockOptimistic
+End Sub
+
+
+Public Sub MockValidateLRNPLDA_DAO(datSadbel As DAO.Database)
+    Dim strCommand As String
+    Dim rstTemp As DAO.Recordset
+    
+    strCommand = vbNullString
+    strCommand = strCommand & "SELECT "
+    strCommand = strCommand & "[PLDA COMBINED].CODE AS CODE, "
+    strCommand = strCommand & "[PLDA COMBINED].[TREE ID] "
+    strCommand = strCommand & "FROM "
+    strCommand = strCommand & "[PLDA COMBINED] INNER JOIN [PLDA COMBINED HEADER] "
+    strCommand = strCommand & "ON [PLDA COMBINED].CODE = [PLDA COMBINED HEADER].CODE "
+    strCommand = strCommand & "WHERE "
+    strCommand = strCommand & "[PLDA COMBINED HEADER].A3 = " & Chr(39) & "P244827589700110000003" & Chr(39) & " "
+    strCommand = strCommand & "AND ("
+    strCommand = strCommand & "[PLDA COMBINED].[TREE ID] NOT IN ('WL1', 'TE') "
+    strCommand = strCommand & "AND "
+    strCommand = strCommand & "NOT ISNUMERIC([PLDA COMBINED].[TREE ID])"
+    strCommand = strCommand & ")"
+    
+    Set rstTemp = datSadbel.OpenRecordset(strCommand)
+End Sub

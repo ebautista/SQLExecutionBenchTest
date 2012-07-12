@@ -341,6 +341,7 @@ Private Sub ExecuteAndLogSQLScript()
                 ExecuteADOInsertsCombined m_conSadbel, strUniqueCode
                 
                 'ExecuteADOUpdatesImport m_conSadbel, strUniqueCode
+                MockValidateLRNPLDA_ADO m_conSadbel
                 
                 ReDim Preserve arrUniqueCode(lngExec)
                 arrUniqueCode(lngExec) = strUniqueCode
@@ -384,6 +385,7 @@ Private Sub ExecuteAndLogSQLScript()
                 ExecuteDAOInsertsCombined m_datSadbel, strUniqueCode
                 
                 'ExecuteDAOUpdatesImport m_datSadbel, strUniqueCode
+                MockValidateLRNPLDA_DAO m_datSadbel
                 
                 ReDim Preserve arrUniqueCode(lngExec)
                 arrUniqueCode(lngExec) = strUniqueCode
@@ -430,6 +432,8 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 ExecuteADOUpdatesImport m_conSadbel, strUniqueCode
                 
+                MockValidateLRNPLDA_ADO m_conSadbel
+                
                 ReDim Preserve arrUniqueCode(lngExec)
                 arrUniqueCode(lngExec) = strUniqueCode
                 
@@ -472,6 +476,8 @@ Private Sub ExecuteAndLogSQLScript()
                 ExecuteDAOInsertsImport m_datSadbel, strUniqueCode
                 
                 ExecuteDAOUpdatesImport m_datSadbel, strUniqueCode
+                
+                MockValidateLRNPLDA_DAO m_datSadbel
                 
                 ReDim Preserve arrUniqueCode(lngExec)
                 arrUniqueCode(lngExec) = strUniqueCode
