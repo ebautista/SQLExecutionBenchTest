@@ -336,15 +336,15 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 dblStart = Timer
                 
-                strUniqueCode = GenerateUniqueCode(m_datData)
+                'strUniqueCode = GenerateUniqueCode(m_datData)
                 
-                ExecuteADOInsertsCombined m_conSadbel, strUniqueCode
+                'ExecuteADOInsertsCombined m_conSadbel, strUniqueCode
                 
                 'ExecuteADOUpdatesImport m_conSadbel, strUniqueCode
-                MockValidateLRNPLDA_ADO m_conSadbel
+                MockValidateLRNPLDA_ADO m_conSadbel, False
                 
-                ReDim Preserve arrUniqueCode(lngExec)
-                arrUniqueCode(lngExec) = strUniqueCode
+                'ReDim Preserve arrUniqueCode(lngExec)
+                'arrUniqueCode(lngExec) = strUniqueCode
                 
                 dblElapse = Timer - dblStart
                 
@@ -356,10 +356,10 @@ Private Sub ExecuteAndLogSQLScript()
                 Print #intFreeFile, strLog
             Next
             
-            lstLog.AddItem "Cleanup Records inserted to DB..."
-            lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Cleanup Records inserted to DB..."
-            ExecuteCleanupADOCombined m_conSadbel, arrUniqueCode
+            'lstLog.AddItem "Cleanup Records inserted to DB..."
+            'lstLog.ListIndex = lstLog.NewIndex
+            'Print #intFreeFile, "Cleanup Records inserted to DB..."
+            'ExecuteCleanupADOCombined m_conSadbel, arrUniqueCode
         Else
             Open G_strMDBPath & "\BenchTest_COMBINED_DAO_" & Format$(Now(), "YYMMDD") & "_" & Format$(Now(), "hhmmss") & ".txt" For Append As #intFreeFile
             
@@ -380,15 +380,15 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 dblStart = Timer
                 
-                strUniqueCode = GenerateUniqueCode(m_datData)
+                'strUniqueCode = GenerateUniqueCode(m_datData)
                 
-                ExecuteDAOInsertsCombined m_datSadbel, strUniqueCode
+                'ExecuteDAOInsertsCombined m_datSadbel, strUniqueCode
                 
                 'ExecuteDAOUpdatesImport m_datSadbel, strUniqueCode
-                MockValidateLRNPLDA_DAO m_datSadbel
+                MockValidateLRNPLDA_DAO m_datSadbel, False
                 
-                ReDim Preserve arrUniqueCode(lngExec)
-                arrUniqueCode(lngExec) = strUniqueCode
+                'ReDim Preserve arrUniqueCode(lngExec)
+                'arrUniqueCode(lngExec) = strUniqueCode
                 
                 dblElapse = Timer - dblStart
                 
@@ -400,10 +400,10 @@ Private Sub ExecuteAndLogSQLScript()
                 Print #intFreeFile, strLog
             Next
             
-            lstLog.AddItem "Cleanup Records inserted to DB..."
-            lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Cleanup Records inserted to DB..."
-            ExecuteCleanupDAOCombined m_datSadbel, arrUniqueCode
+            'lstLog.AddItem "Cleanup Records inserted to DB..."
+            'lstLog.ListIndex = lstLog.NewIndex
+            'Print #intFreeFile, "Cleanup Records inserted to DB..."
+            'ExecuteCleanupDAOCombined m_datSadbel, arrUniqueCode
         End If
     Else
         If cboConnector.ListIndex = 0 Then
@@ -426,16 +426,16 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 dblStart = Timer
                 
-                strUniqueCode = GenerateUniqueCode(m_datData)
+                'strUniqueCode = GenerateUniqueCode(m_datData)
                 
-                ExecuteADOInsertsImport m_conSadbel, strUniqueCode
+                'ExecuteADOInsertsImport m_conSadbel, strUniqueCode
                 
-                ExecuteADOUpdatesImport m_conSadbel, strUniqueCode
+                'ExecuteADOUpdatesImport m_conSadbel, strUniqueCode
                 
-                MockValidateLRNPLDA_ADO m_conSadbel
+                MockValidateLRNPLDA_ADO m_conSadbel, True
                 
-                ReDim Preserve arrUniqueCode(lngExec)
-                arrUniqueCode(lngExec) = strUniqueCode
+                'ReDim Preserve arrUniqueCode(lngExec)
+                'arrUniqueCode(lngExec) = strUniqueCode
                 
                 dblElapse = Timer - dblStart
                 
@@ -447,10 +447,10 @@ Private Sub ExecuteAndLogSQLScript()
                 Print #intFreeFile, strLog
             Next
             
-            lstLog.AddItem "Cleanup Records inserted to DB..."
-            lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Cleanup Records inserted to DB..."
-            ExecuteCleanupADOImport m_conSadbel, arrUniqueCode
+            'lstLog.AddItem "Cleanup Records inserted to DB..."
+            'lstLog.ListIndex = lstLog.NewIndex
+            'Print #intFreeFile, "Cleanup Records inserted to DB..."
+            'ExecuteCleanupADOImport m_conSadbel, arrUniqueCode
         Else
             Open G_strMDBPath & "\BenchTest_IMPORT_DAO_" & Format$(Now(), "YYMMDD") & "_" & Format$(Now(), "hhmmss") & ".txt" For Append As #intFreeFile
             
@@ -471,16 +471,16 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 dblStart = Timer
                 
-                strUniqueCode = GenerateUniqueCode(m_datData)
+                'strUniqueCode = GenerateUniqueCode(m_datData)
                 
-                ExecuteDAOInsertsImport m_datSadbel, strUniqueCode
+                'ExecuteDAOInsertsImport m_datSadbel, strUniqueCode
                 
-                ExecuteDAOUpdatesImport m_datSadbel, strUniqueCode
+                'ExecuteDAOUpdatesImport m_datSadbel, strUniqueCode
                 
-                MockValidateLRNPLDA_DAO m_datSadbel
+                MockValidateLRNPLDA_DAO m_datSadbel, True
                 
-                ReDim Preserve arrUniqueCode(lngExec)
-                arrUniqueCode(lngExec) = strUniqueCode
+                'ReDim Preserve arrUniqueCode(lngExec)
+                'arrUniqueCode(lngExec) = strUniqueCode
                 
                 dblElapse = Timer - dblStart
                 
@@ -492,10 +492,10 @@ Private Sub ExecuteAndLogSQLScript()
                 Print #intFreeFile, strLog
             Next
             
-            lstLog.AddItem "Cleanup Records inserted to DB..."
-            lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Cleanup Records inserted to DB..."
-            ExecuteCleanupDAOImport m_datSadbel, arrUniqueCode
+            'lstLog.AddItem "Cleanup Records inserted to DB..."
+            'lstLog.ListIndex = lstLog.NewIndex
+            'Print #intFreeFile, "Cleanup Records inserted to DB..."
+            'ExecuteCleanupDAOImport m_datSadbel, arrUniqueCode
         End If
     End If
     
