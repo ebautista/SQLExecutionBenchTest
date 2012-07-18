@@ -294,3 +294,29 @@ ErrHandler:
     End Select
     
 End Function
+
+
+Public Function IsIndexExisting(ByRef datSadbel As DAO.Database, ByVal IndexName As String, ByVal TableName As String) As Boolean
+    Dim strObjectName As String
+    Dim idxTarget As DAO.Index
+    Dim TargetTable As DAO.TableDef
+    
+    IsIndexExisting = False
+    
+    datSadbel.TableDefs.Refresh
+    
+    For Each TargetTable In datSadbel.TableDefs
+        If TargetTable.Name = TableName Then
+            For Each idxTarget In TargetTable.Indexes
+                If UCase(idxTarget.Name) = UCase(IndexName) Then
+                    IsIndexExisting = True
+                    Exit Function
+                End If
+            Next
+            
+            Exit Function
+        End If
+    Next
+    
+End Function
+

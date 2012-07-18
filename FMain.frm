@@ -14,6 +14,23 @@ Begin VB.Form FMain
    ScaleWidth      =   10980
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton btnIndex 
+      Caption         =   "&Index A3"
+      Height          =   495
+      Left            =   6840
+      TabIndex        =   14
+      Top             =   8280
+      Width           =   1935
+   End
+   Begin VB.CheckBox cboA3 
+      Caption         =   "Field A3 is indexed"
+      Enabled         =   0   'False
+      Height          =   255
+      Left            =   120
+      TabIndex        =   13
+      Top             =   8400
+      Width           =   1695
+   End
    Begin VB.ComboBox cboDtype 
       Height          =   315
       Left            =   9240
@@ -212,9 +229,32 @@ Private Const DATABASE_SADBEL As String = "mdb_sadbel.mdb"
 Private Const DATABASE_DATA As String = "mdb_data.mdb"
 
 
+Private Sub btnIndex_Click()
+    cmdExecute.Enabled = False
+    btnIndex.Enabled = False
+    
+    CreateDropIndex m_datSadbel, cboA3.value = vbChecked, IIf(cboDtype.ListIndex = 0, "PLDA COMBINED HEADER", "PLDA IMPORT HEADER")
+    
+    cboA3.value = IIf(cboA3.value = vbChecked, vbUnchecked, vbChecked)
+    
+    btnIndex.Caption = IIf(cboA3.value = vbChecked, "&Remove Index A3", "&Create Index A3")
+    
+    cmdExecute.Enabled = True
+    btnIndex.Enabled = True
+End Sub
+
+
+Private Sub cboDtype_Click()
+    If m_datSadbel Is Nothing Then Exit Sub
+    cboA3.value = IIf(IsIndexExisting(m_datSadbel, "A3", IIf(cboDtype.ListIndex = 0, "PLDA COMBINED HEADER", "PLDA IMPORT HEADER")), vbChecked, vbUnchecked)
+    btnIndex.Caption = IIf(cboA3.value = vbChecked, "&Remove Index A3", "&Create Index A3")
+End Sub
+
+
 Private Sub cmdExecute_Click()
     
     cmdExecute.Enabled = False
+    btnIndex.Enabled = False
     
     'Cleanup screen
     lstLog.Clear
@@ -223,8 +263,10 @@ Private Sub cmdExecute_Click()
     ExecuteAndLogSQLScript
     
     cmdExecute.Enabled = True
+    btnIndex.Enabled = True
     
 End Sub
+
 
 Private Sub Form_Load()
     'Set Default Values
@@ -242,7 +284,7 @@ End Sub
 
 
 Private Sub LoadDefaultValues()
-    txtDetails.Text = 10
+    txtDetails.Text = 5
     txtExecutionTimes.Text = 1000
 End Sub
 
@@ -277,6 +319,9 @@ Private Sub InitConnectionAndDatabase()
     OpenDAODatabase m_datSadbel, G_strMDBPath & "\" & DATABASE_SADBEL
     OpenDAODatabase m_datData, G_strMDBPath & "\" & DATABASE_DATA
     
+    cboA3.value = IIf(IsIndexExisting(m_datSadbel, "A3", IIf(cboDtype.ListIndex = 0, "PLDA COMBINED HEADER", "PLDA IMPORT HEADER")), vbChecked, vbUnchecked)
+    btnIndex.Caption = IIf(cboA3.value = vbChecked, "&Remove Index A3", "&Create Index A3")
+    
 End Sub
 
 
@@ -284,7 +329,7 @@ Private Sub ExecuteAndLogSQLScript()
     
     Dim strUniqueCode As String
     Dim lngExec As Long
-    Dim dblStart As Double, dblElapse As Double
+    Dim dblStart As Double, dblElapse As Double, dblTotal As Double
     Dim strLog As String
     
     Dim intFreeFile As Integer
@@ -292,8 +337,6 @@ Private Sub ExecuteAndLogSQLScript()
     
     Dim strOSName As String
     Dim strOSVersion As String
-    
-    Dim arrUniqueCode() As String
     
     intFreeFile = FreeFile()
     
@@ -340,13 +383,12 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 ExecuteADOInsertsCombined m_conSadbel, strUniqueCode
                 
-                ExecuteADOUpdatesImport m_conSadbel, strUniqueCode
                 MockValidateLRNPLDA_ADO m_conSadbel, False
                 
-                ReDim Preserve arrUniqueCode(lngExec)
-                arrUniqueCode(lngExec) = strUniqueCode
+                ExecuteCleanupADOCombined m_conSadbel, strUniqueCode
                 
                 dblElapse = Timer - dblStart
+                dblTotal = dblTotal + dblElapse
                 
                 strLog = "Executing ( " & lngExec & " of " & txtExecutionTimes.Text & " ) - Duration ( ADO ) : " & FormatNumber(dblElapse, 4, vbTrue, vbUseDefault, vbUseDefault) & " seconds"
                 
@@ -355,11 +397,6 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 Print #intFreeFile, strLog
             Next
-            
-            lstLog.AddItem "Cleanup Records inserted to DB..."
-            lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Cleanup Records inserted to DB..."
-            ExecuteCleanupADOCombined m_conSadbel, arrUniqueCode
         Else
             Open G_strMDBPath & "\BenchTest_COMBINED_DAO_" & Format$(Now(), "YYMMDD") & "_" & Format$(Now(), "hhmmss") & ".txt" For Append As #intFreeFile
             
@@ -384,13 +421,12 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 ExecuteDAOInsertsCombined m_datSadbel, strUniqueCode
                 
-                ExecuteDAOUpdatesImport m_datSadbel, strUniqueCode
                 MockValidateLRNPLDA_DAO m_datSadbel, False
                 
-                ReDim Preserve arrUniqueCode(lngExec)
-                arrUniqueCode(lngExec) = strUniqueCode
+                ExecuteCleanupDAOCombined m_datSadbel, strUniqueCode
                 
                 dblElapse = Timer - dblStart
+                dblTotal = dblTotal + dblElapse
                 
                 strLog = "Executing ( " & lngExec & " of " & txtExecutionTimes.Text & " ) - Duration ( DAO ) : " & FormatNumber(dblElapse, 4, vbTrue, vbUseDefault, vbUseDefault) & " seconds"
                 
@@ -399,11 +435,6 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 Print #intFreeFile, strLog
             Next
-            
-            lstLog.AddItem "Cleanup Records inserted to DB..."
-            lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Cleanup Records inserted to DB..."
-            ExecuteCleanupDAOCombined m_datSadbel, arrUniqueCode
         End If
     Else
         If cboConnector.ListIndex = 0 Then
@@ -430,14 +461,12 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 ExecuteADOInsertsImport m_conSadbel, strUniqueCode
                 
-                ExecuteADOUpdatesImport m_conSadbel, strUniqueCode
-                
                 MockValidateLRNPLDA_ADO m_conSadbel, True
                 
-                ReDim Preserve arrUniqueCode(lngExec)
-                arrUniqueCode(lngExec) = strUniqueCode
+                ExecuteCleanupADOImport m_conSadbel, strUniqueCode
                 
                 dblElapse = Timer - dblStart
+                dblTotal = dblTotal + dblElapse
                 
                 strLog = "Executing ( " & lngExec & " of " & txtExecutionTimes.Text & " ) - Duration ( ADO ) : " & FormatNumber(dblElapse, 4, vbTrue, vbUseDefault, vbUseDefault) & " seconds"
                 
@@ -446,11 +475,6 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 Print #intFreeFile, strLog
             Next
-            
-            lstLog.AddItem "Cleanup Records inserted to DB..."
-            lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Cleanup Records inserted to DB..."
-            ExecuteCleanupADOImport m_conSadbel, arrUniqueCode
         Else
             Open G_strMDBPath & "\BenchTest_IMPORT_DAO_" & Format$(Now(), "YYMMDD") & "_" & Format$(Now(), "hhmmss") & ".txt" For Append As #intFreeFile
             
@@ -475,14 +499,12 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 ExecuteDAOInsertsImport m_datSadbel, strUniqueCode
                 
-                ExecuteDAOUpdatesImport m_datSadbel, strUniqueCode
-                
                 MockValidateLRNPLDA_DAO m_datSadbel, True
                 
-                ReDim Preserve arrUniqueCode(lngExec)
-                arrUniqueCode(lngExec) = strUniqueCode
+                ExecuteCleanupDAOImport m_datSadbel, strUniqueCode
                 
                 dblElapse = Timer - dblStart
+                dblTotal = dblTotal + dblElapse
                 
                 strLog = "Executing ( " & lngExec & " of " & txtExecutionTimes.Text & " ) - Duration ( DAO ) : " & FormatNumber(dblElapse, 4, vbTrue, vbUseDefault, vbUseDefault) & " seconds"
                 
@@ -491,20 +513,23 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 Print #intFreeFile, strLog
             Next
-            
-            lstLog.AddItem "Cleanup Records inserted to DB..."
-            lstLog.ListIndex = lstLog.NewIndex
-            Print #intFreeFile, "Cleanup Records inserted to DB..."
-            ExecuteCleanupDAOImport m_datSadbel, arrUniqueCode
         End If
     End If
     
     lstLog.AddItem "End of SQL Bench Test..."
     lstLog.ListIndex = lstLog.NewIndex
     Print #intFreeFile, "End of SQL Bench Test..."
-    Close #intFreeFile
     
-    Erase arrUniqueCode
+    lstLog.AddItem "Total execution time is " & dblTotal
+    lstLog.ListIndex = lstLog.NewIndex
+    Print #intFreeFile, "Total execution time is " & dblTotal
+    
+    lstLog.AddItem "Average execution time is  " & dblTotal / txtExecutionTimes.Text & " seconds"
+    lstLog.ListIndex = lstLog.NewIndex
+    Print #intFreeFile, "Average execution time is  " & dblTotal / txtExecutionTimes.Text & " seconds"
+    
+    Close #intFreeFile
+
 End Sub
 
 
