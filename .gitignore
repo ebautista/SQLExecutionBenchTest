@@ -1,2 +1,7 @@
 # Binary File
 *.exe
+
+/CubelibDatasource.dll
+/CubelibDatasource.pdb
+/CubelibDatasource.tlb
+/CubelibDatasource.xml

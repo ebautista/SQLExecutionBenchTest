@@ -220,6 +220,8 @@ Private m_datData As DAO.Database
 
 Private Const CONST_ADO_CONNECTOR As String = "ADO"
 Private Const CONST_DAO_CONNECTOR As String = "DAO"
+Private Const CONST_NET_XML_CONNECTOR As String = ".NET XML"
+Private Const CONST_NET_DSRS_CONNECTOR As String = ".NET DIRECT"
 
 Private Const IMPORT_DECLARATION As String = "Import"
 Private Const COMBINED_DECLARATION As String = "Combined"
@@ -292,6 +294,8 @@ End Sub
 Private Sub InitComboBox()
     cboConnector.AddItem CONST_ADO_CONNECTOR
     cboConnector.AddItem CONST_DAO_CONNECTOR
+    cboConnector.AddItem CONST_NET_XML_CONNECTOR
+    cboConnector.AddItem CONST_NET_DSRS_CONNECTOR
     cboConnector.ListIndex = 0
     
     cboDtype.AddItem COMBINED_DECLARATION
@@ -397,7 +401,7 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 Print #intFreeFile, strLog
             Next
-        Else
+        ElseIf cboConnector.ListIndex = 1 Then
             Open G_strMDBPath & "\BenchTest_COMBINED_DAO_" & Format$(Now(), "YYMMDD") & "_" & Format$(Now(), "hhmmss") & ".txt" For Append As #intFreeFile
             
             lstLog.AddItem "Computer Name: " & Environ$("computername")
@@ -429,6 +433,82 @@ Private Sub ExecuteAndLogSQLScript()
                 dblTotal = dblTotal + dblElapse
                 
                 strLog = "Executing ( " & lngExec & " of " & txtExecutionTimes.Text & " ) - Duration ( DAO ) : " & FormatNumber(dblElapse, 4, vbTrue, vbUseDefault, vbUseDefault) & " seconds"
+                
+                lstLog.AddItem strLog
+                lstLog.ListIndex = lstLog.NewIndex
+                
+                Print #intFreeFile, strLog
+            Next
+        ElseIf cboConnector.ListIndex = 2 Then
+            Open G_strMDBPath & "\BenchTest_COMBINED_NETXML_" & Format$(Now(), "YYMMDD") & "_" & Format$(Now(), "hhmmss") & ".txt" For Append As #intFreeFile
+            
+            lstLog.AddItem "Computer Name: " & Environ$("computername")
+            lstLog.ListIndex = lstLog.NewIndex
+            Print #intFreeFile, "Computer Name: " & Environ$("computername")
+            
+            lstLog.AddItem "OS Version: " & strOSName & " ( " & strOSVersion & " )"
+            lstLog.ListIndex = lstLog.NewIndex
+            Print #intFreeFile, "OS Version: " & strOSName & " ( " & strOSVersion & " )" & vbCrLf
+            
+            lstLog.AddItem "Executing a PLDA Combined Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details"
+            lstLog.ListIndex = lstLog.NewIndex
+            Print #intFreeFile, "Executing a PLDA Combined Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details" & vbCrLf
+            
+            For lngExec = 1 To txtExecutionTimes.Text
+                DoEvents
+                
+                dblStart = Timer
+                
+                strUniqueCode = GenerateUniqueCode(m_datData)
+                
+                ExecuteNETInsertsCombined strUniqueCode
+                
+                MockValidateLRNPLDA_NET False, True
+                
+                ExecuteCleanupNETCombined strUniqueCode
+                
+                dblElapse = Timer - dblStart
+                dblTotal = dblTotal + dblElapse
+                
+                strLog = "Executing ( " & lngExec & " of " & txtExecutionTimes.Text & " ) - Duration ( .NET XML ) : " & FormatNumber(dblElapse, 4, vbTrue, vbUseDefault, vbUseDefault) & " seconds"
+                
+                lstLog.AddItem strLog
+                lstLog.ListIndex = lstLog.NewIndex
+                
+                Print #intFreeFile, strLog
+            Next
+        ElseIf cboConnector.ListIndex = 3 Then
+            Open G_strMDBPath & "\BenchTest_COMBINED_NETDIRECT_" & Format$(Now(), "YYMMDD") & "_" & Format$(Now(), "hhmmss") & ".txt" For Append As #intFreeFile
+            
+            lstLog.AddItem "Computer Name: " & Environ$("computername")
+            lstLog.ListIndex = lstLog.NewIndex
+            Print #intFreeFile, "Computer Name: " & Environ$("computername")
+            
+            lstLog.AddItem "OS Version: " & strOSName & " ( " & strOSVersion & " )"
+            lstLog.ListIndex = lstLog.NewIndex
+            Print #intFreeFile, "OS Version: " & strOSName & " ( " & strOSVersion & " )" & vbCrLf
+            
+            lstLog.AddItem "Executing a PLDA Combined Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details"
+            lstLog.ListIndex = lstLog.NewIndex
+            Print #intFreeFile, "Executing a PLDA Combined Bench Testing with " & txtExecutionTimes.Text & " execution times for declaration with " & txtDetails.Text & " details" & vbCrLf
+            
+            For lngExec = 1 To txtExecutionTimes.Text
+                DoEvents
+                
+                dblStart = Timer
+                
+                strUniqueCode = GenerateUniqueCode(m_datData)
+                
+                ExecuteNETInsertsCombined strUniqueCode
+                
+                MockValidateLRNPLDA_NET False, False
+                
+                ExecuteCleanupNETCombined strUniqueCode
+                
+                dblElapse = Timer - dblStart
+                dblTotal = dblTotal + dblElapse
+                
+                strLog = "Executing ( " & lngExec & " of " & txtExecutionTimes.Text & " ) - Duration ( .NET DIRECT DS2RS ) : " & FormatNumber(dblElapse, 4, vbTrue, vbUseDefault, vbUseDefault) & " seconds"
                 
                 lstLog.AddItem strLog
                 lstLog.ListIndex = lstLog.NewIndex
@@ -475,7 +555,7 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 Print #intFreeFile, strLog
             Next
-        Else
+        ElseIf cboConnector.ListIndex = 1 Then
             Open G_strMDBPath & "\BenchTest_IMPORT_DAO_" & Format$(Now(), "YYMMDD") & "_" & Format$(Now(), "hhmmss") & ".txt" For Append As #intFreeFile
             
             lstLog.AddItem "Computer Name: " & Environ$("computername")
@@ -513,6 +593,9 @@ Private Sub ExecuteAndLogSQLScript()
                 
                 Print #intFreeFile, strLog
             Next
+        Else
+            MsgBox "NOT YET SUPPORTED!!!", vbInformation, FMain.Caption
+            Exit Sub
         End If
     End If
     
