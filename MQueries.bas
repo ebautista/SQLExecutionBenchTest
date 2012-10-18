@@ -393,31 +393,31 @@ Public Sub ExecuteNETInsertsCombined(UniqueCode As String)
     'HEADERS
     '*********************************************************************************************************************************
     strCommand = "INSERT INTO [PLDA COMBINED HEADER] (A1, [Book_Name], A2, AD, A9, AC, A3, A4, A5, A6, A7, A8, AA, AB, AH, AI, AJ, AK, AL, AM, AN, D1, D2, D3, C4, C5, C6, C2, C3, C7, D5, D8, D9, D6, D7, DF, D4, DB, DC, DD, DE, DG, AO, [Code], [Header]) VALUES ('EX', '', 'Z', '', 'NL', 'TRAD 1', 'P244827589700110000003', '20120712', 'UIKHOVEN', 'BEHSS216001', 'BE101000', '0', '', 'METROTILE.VLG.696', '', '', '', 'A3', '', '', '', '26440.000', '26100.000', '19', '40811.8', 'USD', '1.3387', 'CIF', 'TINCAN ISLAND', '11', 'ECMU 460479-4', '1', '3', 'ECMU 460479-4', '', '', 'BETONZ2224001', 'BE', '', '', '', '', '', '" & UniqueCode & "', 1)"
-    objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+    objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
     strCommand = "INSERT INTO [PLDA COMBINED HEADER ZEKERHEID] (E4, E5, E6, E7, E8, E9, EA, EB, EC, ED, EE, EF, [Code], [Header], [Ordinal]) VALUES ('', '', '', '', '', '', '', '', '', '', '', 'E', '" & UniqueCode & "', 1, 1)"
-    objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+    objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
     strCommand = "INSERT INTO [PLDA COMBINED HEADER ZEGELS] (E1, E2, E3, [Code], [Header], [Ordinal]) VALUES ('', '', 'E', '" & UniqueCode & "', 1, 1)"
-    objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+    objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
     strCommand = "INSERT INTO [PLDA COMBINED HEADER HANDELAARS] (XE, X1, XF, XD, XG, XH, X2, X3, X4, X5, X7, X6, X8, X9, XA, XB, XC, [Code], [Header], [Ordinal]) VALUES ('1', 'BE0050448275897', '1', '2128', '', '', '', '', '', '', '', '', '', 'TRADUBEL SA', '087851113', '087866786', 'EYNATTEN@TRADUBEL.BE', '" & UniqueCode & "', 1, 1)"
-    objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+    objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
     strCommand = "INSERT INTO [PLDA COMBINED HEADER HANDELAARS] (XE, X1, XF, XD, XG, XH, X2, X3, X4, X5, X7, X6, X8, X9, XA, XB, XC, [Code], [Header], [Ordinal]) VALUES ('2', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '" & UniqueCode & "', 1, 2)"
-    objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+    objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
     strCommand = "INSERT INTO [PLDA COMBINED HEADER HANDELAARS] (XE, X1, XF, XD, XG, XH, X2, X3, X4, X5, X7, X6, X8, X9, XA, XB, XC, [Code], [Header], [Ordinal]) VALUES ('3', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '" & UniqueCode & "', 1, 3)"
-    objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+    objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
     strCommand = "INSERT INTO [PLDA COMBINED HEADER HANDELAARS] (XE, X1, XF, XD, XG, XH, X2, X3, X4, X5, X7, X6, X8, X9, XA, XB, XC, [Code], [Header], [Ordinal]) VALUES ('4', '', '', '', '', '', 'METROTILE', 'J.G. STREET', '', '999', '', 'ABUJA', 'NG', '', '', '', '', '" & UniqueCode & "', 1, 4)"
-    objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+    objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
     strCommand = "INSERT INTO [PLDA COMBINED HEADER HANDELAARS] (XE, X1, XF, XD, XG, XH, X2, X3, X4, X5, X7, X6, X8, X9, XA, XB, XC, [Code], [Header], [Ordinal]) VALUES ('5', 'BE0050460680219', '', '2224', '', '', '', '', '', '', '', '', '', 'SARAH', '012241801', '012241802', '', '" & UniqueCode & "', 1, 5)"
-    objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+    objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
     strCommand = "INSERT INTO [PLDA COMBINED HEADER TRANSIT OFFICES] (AE, AF, AG, [Code], [Header], [Ordinal]) VALUES ('', '', 'E', '" & UniqueCode & "', 1, 1)"
-    objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+    objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
     '*********************************************************************************************************************************
 
     '*********************************************************************************************************************************
@@ -425,34 +425,34 @@ Public Sub ExecuteNETInsertsCombined(UniqueCode As String)
     '*********************************************************************************************************************************
     For lngIdx = 0 To FMain.txtDetails.Text
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL] (L1, L2, L3, L4, L5, L6, LC, L8, L9, LA, N1, N2, N3, ND, NE, N4, NF, NG, NH, N9, N7, NB, NC, S1, S2, S3, SF, M1, M2, O3, O4, M3, M4, M5, O2, O6, OB, R1, R2, R3, R5, R6, R8, R9, T7, [Code], [Header], [Detail]) VALUES ('68079000', '', '', '', '', '', '', 'werken van asfalt of van dergelijke producten b.v. petroleumbitumen, koolteerpek (m.u.v. die op rollen)', '26440.000', '26100.000', '10', '0', '', '', '', 'A', '', '', '', '', 'NG', '', '1', 'PX', '19', 'PX', '', '', '', '', '', '', '', '', '21400', 'EUR', '1', 'Z', 'ZZZ', '20111206', 'VLG.696', '', '', '', 'F', '" & UniqueCode & "', 1, " & lngIdx & ")"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL CONTAINER] (S4, S5, S6, [Code], [Header], [Detail], [Ordinal]) VALUES ('', '', 'E', '" & UniqueCode & "', 1, 2, 1)"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL DOCUMENTEN] (Q1, Q2, Q3, Q4, QB, QC, Q5, Q7, Q8, Q9, QA, [Code], [Header], [Detail], [Ordinal]) VALUES ('N380', '12455', '20111206', '', '', '', '1', '', '', '', 'V', '" & UniqueCode & "', 1, " & lngIdx & ", 1)"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL DOCUMENTEN] (Q1, Q2, Q3, Q4, QB, QC, Q5, Q7, Q8, Q9, QA, [Code], [Header], [Detail], [Ordinal]) VALUES ('3028', '2224', '20111206', '', '', '', '1', '', '', '', 'E', '" & UniqueCode & "', 1, " & lngIdx & ", 2)"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL BIJZONDERE] (P1, P2, P3, P4, P5, [Code], [Header], [Detail], [Ordinal]) VALUES ('30400', '', '', '', 'V', '" & UniqueCode & "', 1, " & lngIdx & ", 1)"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL BIJZONDERE] (P1, P2, P3, P4, P5, [Code], [Header], [Detail], [Ordinal]) VALUES ('ALGEN06', 'BE0460680219', '', '', 'E', '" & UniqueCode & "', 1, " & lngIdx & ", 2)"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL HANDELAARS] (VE, V1, VG, VH, V2, V3, V4, V5, V7, V6, V8, [Code], [Header], [Detail], [Ordinal]) VALUES ('1', '', '', '', '', '', '', '', '', '', '', '" & UniqueCode & "', 1, " & lngIdx & ", 1)"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL HANDELAARS] (VE, V1, VG, VH, V2, V3, V4, V5, V7, V6, V8, [Code], [Header], [Detail], [Ordinal]) VALUES ('2', '', '', '', '', '', '', '', '', '', '', '" & UniqueCode & "', 1, " & lngIdx & ", 2)"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL HANDELAARS] (VE, V1, VG, VH, V2, V3, V4, V5, V7, V6, V8, [Code], [Header], [Detail], [Ordinal]) VALUES ('3', '', '', '', '', '', '', '', '', '', '', '" & UniqueCode & "', 1, " & lngIdx & ", 3)"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
 
         strCommand = "INSERT INTO [PLDA COMBINED DETAIL SENSITIVE GOODS] (SB, SC, SD, SE, [Code], [Header], [Detail], [Ordinal]) VALUES ('', '', '', 'E', '" & UniqueCode & "', 1, " & lngIdx & ", 1)"
-        objSource.ExecuteNonQuery strCommand, "mdb_sadbel"
+        objSource.ExecuteNonQuery strCommand, DBInstanceType_DATABASE_SADBEL
     Next lngIdx
     '*********************************************************************************************************************************
     
@@ -502,18 +502,18 @@ Public Sub ExecuteCleanupNETCombined(UniqueCode As String)
     Set objSource = New CDatasource
     Dim lngReturn As Long
     
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER ZEGELS] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER HANDELAARS] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER ZEKERHEID] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER TRANSIT OFFICES] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER ZEGELS] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER HANDELAARS] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER ZEKERHEID] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED HEADER TRANSIT OFFICES] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
 
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL CONTAINER] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL DOCUMENTEN] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL BIJZONDERE] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL SENSITIVE GOODS] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
-    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL HANDELAARS] WHERE CODE = '" & UniqueCode & "'", "mdb_sadbel")
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL CONTAINER] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL DOCUMENTEN] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL BIJZONDERE] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL SENSITIVE GOODS] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
+    lngReturn = objSource.ExecuteNonQuery("DELETE FROM [PLDA COMBINED DETAIL HANDELAARS] WHERE CODE = '" & UniqueCode & "'", DBInstanceType_DATABASE_SADBEL)
     
     Debug.Print "Deleting " & UniqueCode
     
@@ -604,7 +604,7 @@ Public Sub MockValidateLRNPLDA_DAO(datSadbel As DAO.Database, isImport As Boolea
 End Sub
 
 
-Public Sub MockValidateLRNPLDA_NET(isImport As Boolean, useXML As Boolean)
+Public Sub MockValidateLRNPLDA_NET(isImport As Boolean)
     Dim strCommand As String
     Dim rstTemp As ADODB.Recordset
     Dim objSource As CDatasource
@@ -642,11 +642,7 @@ Public Sub MockValidateLRNPLDA_NET(isImport As Boolean, useXML As Boolean)
         strCommand = strCommand & ")"
     End If
     
-    If useXML Then
-        Set rstTemp = objSource.ExecuteQuery(strCommand, "mdb_sadbel")
-    Else
-        Set rstTemp = objSource.ExecuteQueryEx(strCommand, "mdb_sadbel")
-    End If
+    Set rstTemp = objSource.ExecuteQuery(strCommand, DBInstanceType_DATABASE_SADBEL)
     
     Set rstTemp = Nothing
     Set objSource = Nothing
